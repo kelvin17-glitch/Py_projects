@@ -14,6 +14,7 @@ res = input("Y/n? ").lower()
 
 if res == "y":
     # Get input range
+    slow_print("Yaay! I'm a computer so I love numbers. Give me a range?")
     user_range = input("Enter a range(Format--> Lower-Upper): ")
     range_mod = user_range.split("-")
 
@@ -24,6 +25,7 @@ if res == "y":
     max_turns = int(math.log2(int(range_mod[1])))
 
     # Let the games begin
+    slow_print("I'm gonna think of a number in the range. Can you guess it?")
     slow_print(f"You get {max_turns} turns. Make 'em count!")
     turns = 0
     while turns < max_turns:
