@@ -38,9 +38,9 @@ if res == "y":
                 slow_print("You must be psychic! You got it!!")
                 break
             elif guess > comp_guess:
-                slow_print("That's too high! You lose!")
+                slow_print(f"That's too high! I was thinking of {comp_guess}. You lose!")
             elif guess < comp_guess:
-                slow_print("That's too low! You lose!")
+                slow_print(f"That's too low! I was thinking of {comp_guess}. You lose!")
         else:
             guess = int(input("Which number I'm I thinking of? "))
             if guess == comp_guess:
