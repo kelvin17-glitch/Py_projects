@@ -20,13 +20,13 @@ fruits = ["Apple", "Banana", "Orange", "Grape", "Mango", "Pineapple", "Watermelo
 word = random.choice(fruits).lower()
 
 # Intro text
-print("Hey! Let's play a game!")
+slow_print("Hey! Let's play a game!")
 print()
-print("I'm gonna think of a word. You're going to guess what it is.")
-print("Ready? Let's Go!")
+slow_print("I'm gonna think of a word. You're going to guess what it is.")
+slow_print("Ready? Let's Go!")
 
 # The clue
-print("Here's the word's 'skeleton': ")
+slow_print("Here's the word's 'skeleton': ")
 for char in word:
     print("__", end=" ")
 print()
@@ -42,13 +42,33 @@ flag = 0
 print()
 slow_print(f"First guess of {chances}! Hope you lucky...")
 slow_print("Big hint! The word's a fruit:)")
-print(word)
 print()
 
 while (chances != 0) and (Counter(guessStr) != Counter(word)):
     chances -= 1
     # Get input
     guess = str(input("Enter a letter: "))
+
+    # Should the letter not appear
+    if guess not in word:
+        slow_print(f"You wrong my g. No '{guess}' here!")
+
+    # Input validation
+    if not guess.isalpha():
+        print()
+        slow_print("INVALID INPUT: ENTER A LETTER")
+        print()
+        continue
+    elif len(guess) > 1:
+        print()
+        slow_print("INVALID INPUT: NEEDS TO BE ONE CHARACTER ONLY")
+        print()
+        continue
+    elif guess in guessStr:
+        print()
+        slow_print("You've already guessed that letter. Guess again.")
+        print()
+        continue
 
     # Check no of occurrences of guess in word
     c = word.count(guess)
@@ -69,8 +89,13 @@ while (chances != 0) and (Counter(guessStr) != Counter(word)):
         slow_print(f"The word was {word}.")
         break
 
-print()
-slow_print(f"You lose! The word was {word}!")
-slow_print("Better luck next time!")
+# If guess' wrong
+if chances <= 0 and (Counter(guessStr) != Counter(word)):
+    print()
+    slow_print(f"You lose! The word was {word}!")
+    slow_print("Better luck next time!")
+
+# Current code has no exception handling. Should modify once the concept is well grasped.
+# --> Kelvin, 8 Mar 25
     
 
