@@ -1,5 +1,6 @@
 import random
 import time
+from collections import Counter
 
 # Make text gen game-like
 def slow_print(text, delay=0.09):
@@ -16,34 +17,60 @@ fruits = ["Apple", "Banana", "Orange", "Grape", "Mango", "Pineapple", "Watermelo
     "Finger Lime", "Kumquat", "Cranberry", "Goji Berry", "Elderberry", "Boysenberry", "Loganberry", "Mulberry", "Cloudberry", "Gooseberry", "Apricot", "Nectarine", "Chokecherry", "Jujube", "Cantaloupe", "Honeydew", "Casaba Melon", "Galia Melon", "Korean Melon", "Breadfruit", "Plantain", "Ackee", "Coconut", "Chestnut", "Hazelnut", "Persimmon", "Medlar", "Loquat", "Jabuticaba", "Noni", "Buffaloberry", "Nutmeg", "Allspice", "Clove", "Elderberry", "Juniper Berry", "Grapes", "Sloe"]
 
 # Pick a fruit
-comp_pick = random.choice(fruits).lower()
-print(comp_pick)
+word = random.choice(fruits).lower()
+
+# Intro text
+print("Hey! Let's play a game!")
+print()
+print("I'm gonna think of a word. You're going to guess what it is.")
+print("Ready? Let's Go!")
+
+# The clue
+print("Here's the word's 'skeleton': ")
+for char in word:
+    print("__", end=" ")
+print()
+
+# String of guessed letters
+guessStr = ''
+
 # Limit max number of chances to guess
-max_chances = len(comp_pick) + 2
-chances = 0
+chances = len(word) + 2
+flag = 0
 
-# Get first guess
-guess = input("Gimme gimme gimme!: ")
-letter_list = list(comp_pick)
+# Game logic
+print()
+slow_print(f"First guess of {chances}! Hope you lucky...")
+slow_print("Big hint! The word's a fruit:)")
+print(word)
+print()
 
-# Append a reference list on first guess
-result = []
-for v in letter_list:
-    if v == guess:
-        result.append(v)
-    else:
-        result.append("-")
-chances += 1
+while (chances != 0) and (Counter(guessStr) != Counter(word)):
+    chances -= 1
+    # Get input
+    guess = str(input("Enter a letter: "))
 
-# The Game logic
-comp = ''.join(letter_list)
-print(result)
-while chances < max_chances:
-    guess = input("Gimme gimme gimme!: ")
-    for i, v in enumerate(letter_list):
-        if guess == v:
-            result[i] = v
-            print(result)
-        chances += 1
+    # Check no of occurrences of guess in word
+    c = word.count(guess)
+    for l in range(c):
+        guessStr += guess
 
-print(result)
+    # Show user current status
+    for char in word:
+        if char in guessStr:
+            print(char, end=' ')
+        else:
+            print("__", end=' ')
+    print()
+
+    # If guess is correct
+    if Counter(guessStr) == Counter(word):
+        slow_print(f"Congrats! You guessed right with {chances} chances remaining!")
+        slow_print(f"The word was {word}.")
+        break
+
+print()
+slow_print(f"You lose! The word was {word}!")
+slow_print("Better luck next time!")
+    
+
